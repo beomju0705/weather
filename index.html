@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>오늘의 날씨</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
+    </head>
+    <body>
+        <section class="hero is-primary">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">오늘의 날씨</h1>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-offset-4 is-4">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    {{form.name}}
+                                </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    추가하기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-offset-4 is-4">
+                        {% for weather in weather_data %}
+                        <div class="box">
+                            <a href="{% url 'detail' weather.id %}">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-50x50">
+                                            <img src="http://openweathermap.org/img/w/{{weather.icon}}.png" alt="image">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <p>
+                                            <span class="title">{{weather.city}}</span>
+                                            <br>
+                                            <span class="subtitle">{{weather.temperature}}°c</span>
+                                            <br> {{weather.description}}
+                                        </p>
+                                    </div>
+                                </article>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
